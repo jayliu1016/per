@@ -3,149 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>刘亮程 | 交互式作品集</title>
+    <title>Liangcheng's Quant Lab</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        body { background-color: #020617; color: white; overflow-x: hidden; }
-        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
-        .section { min-height: 100vh; padding: 4rem 2rem; display: flex; align-items: center; }
-        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2rem; }
-        .risk-gradient { background: linear-gradient(90deg, #22c55e, #eab308, #ef4444); height: 8px; border-radius: 4px; }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap');
+        .quant-font { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(56, 189, 248, 0.2); }
+        .factor-grid div { transition: all 0.3s ease; cursor: pointer; }
+        .factor-grid div:hover { transform: scale(1.1); filter: brightness(1.5); }
     </style>
 </head>
-<body>
+<body class="bg-[#020617] text-white min-h-screen flex items-center justify-center p-6">
 
-    <div id="canvas-container"></div>
-
-    <section class="section" id="education">
-        <div class="max-w-4xl mx-auto glass-card p-10">
-            <h2 class="text-4xl font-bold mb-6 italic">学术足迹 <span class="text-blue-500">Academic Journey</span></h2>
-            <div class="grid md:grid-cols-2 gap-10">
-                <div class="cursor-pointer group" onmouseover="rotateToCity('Atlanta')">
-                    <h3 class="text-2xl font-bold group-hover:text-blue-400 transition">EMORY UNIVERSITY</h3>
-                    <p class="text-slate-400 mt-2">亚特兰大 | 这里的 Lullwater Park 见证了我的 QSS 探索。</p>
-                </div>
-                <div class="cursor-pointer group" onmouseover="rotateToCity('Durham')">
-                    <h3 class="text-2xl font-bold group-hover:text-blue-700 transition">DUKE UNIVERSITY</h3>
-                    <p class="text-slate-400 mt-2">达勒姆 | 在 Duke Chapel 的倒影中研究深度学习。</p>
-                </div>
+    <div class="max-w-4xl w-full glass-panel rounded-3xl p-8 shadow-2xl shadow-blue-500/10">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="text-blue-400 font-mono text-sm tracking-widest uppercase mb-1">Soochow Securities | Quant Project</h2>
+                <h1 class="text-3xl font-bold">高频因子与行业轮动模型</h1>
             </div>
-            <div class="mt-8 text-sm text-blue-300 font-mono">
-                [ 鼠标悬停学校，3D 地球将自动转场 ]
+            <div class="text-right">
+                <p class="text-slate-500 text-xs uppercase tracking-tighter">Sharpe Ratio</p>
+                <div id="sharpe-ratio" class="text-6xl font-black text-yellow-400 quant-font">0.0</div>
             </div>
         </div>
-    </section>
 
-    <section class="section">
-        <div class="max-w-5xl mx-auto w-full grid md:grid-cols-2 gap-10 items-center">
-            <div class="glass-card p-8">
-                <h2 class="text-3xl font-bold mb-4">🌍 气候风险模型</h2>
-                <p class="text-slate-400 mb-6">滑动查看 2025 - 2100 年美国房地产市场的风险演变：</p>
-                
-                <div class="space-y-6">
-                    <div>
-                        <div class="flex justify-between mb-2 font-mono text-sm">
-                            <span>Year: <span id="year-val">2025</span></span>
-                            <span>Risk Level: <span id="risk-val">Low</span></span>
-                        </div>
-                        <input type="range" min="2025" max="2100" value="2025" class="w-full" id="year-slider">
-                        <div class="risk-gradient mt-2"></div>
+        <div class="grid md:grid-cols-2 gap-10">
+            <div>
+                <p class="text-sm text-slate-400 mb-4 italic">点击因子查看行业暴露贡献度：</p>
+                <div class="factor-grid grid grid-cols-5 gap-2" id="heatmap">
                     </div>
-                    
-                    <div class="flex gap-2">
-                        <button class="px-4 py-2 rounded bg-blue-600 text-xs">野火模式</button>
-                        <button class="px-4 py-2 rounded bg-slate-700 text-xs">洪水模式</button>
-                        <button class="px-4 py-2 rounded bg-slate-700 text-xs">极端高温</button>
-                    </div>
+                <div class="flex gap-4 mt-6">
+                    <button onclick="highlightFactor('momentum')" class="px-4 py-2 border border-blue-500/50 rounded-full text-xs hover:bg-blue-500/20 transition">动量因子 (Momentum)</button>
+                    <button onclick="highlightFactor('value')" class="px-4 py-2 border border-purple-500/50 rounded-full text-xs hover:bg-purple-500/20 transition">价值因子 (Value)</button>
                 </div>
             </div>
-            <div class="h-80 bg-slate-800 rounded-3xl border-2 border-dashed border-slate-700 flex items-center justify-center relative overflow-hidden">
-                <div id="map-overlay" class="absolute inset-0 bg-green-500/20 transition-colors duration-500"></div>
-                <p class="z-10 font-bold opacity-50 uppercase tracking-widest text-center px-4">Interactive County-Level Map<br><span class="text-xs">Connecting to Citizens Bank Project Data</span></p>
-            </div>
-        </div>
-    </section>
 
-    <section class="section">
-        <div class="max-w-4xl mx-auto w-full text-center">
-            <h2 class="text-3xl font-bold mb-12">📦 供应链炼金术：成本革命</h2>
-            <div class="relative h-64 flex items-center justify-center">
-                <div id="box-old" class="absolute w-48 h-48 border-2 border-red-500 flex items-center justify-center transition-all duration-700">
-                    <span class="text-red-500 font-bold">传统包装<br>$208</span>
-                </div>
-                <div id="box-new" class="absolute w-48 h-48 border-2 border-green-500 flex items-center justify-center scale-50 opacity-0 transition-all duration-700">
-                    <span class="text-green-400 font-bold">模块化设计<br>$0.40</span>
+            <div class="relative h-48 bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden flex items-end">
+                <svg viewBox="0 0 400 150" class="w-full h-full">
+                    <path id="alpha-line" d="M0,150 Q50,140 100,100 T200,80 T300,40 T400,10" 
+                          fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" />
+                </svg>
+                <div class="absolute top-4 left-4 bg-blue-500/20 px-3 py-1 rounded text-[10px] text-blue-300 font-bold uppercase">
+                    Alpha Curve +18.4%
                 </div>
             </div>
-            <button onclick="triggerOptimization()" class="mt-20 px-8 py-3 bg-white text-black rounded-full font-bold hover:bg-blue-500 hover:text-white transition">点击模拟成本优化动画</button>
         </div>
-    </section>
+
+        <div class="mt-10 pt-6 border-t border-slate-800 flex flex-wrap gap-3">
+            <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-400">PCA</span>
+            <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-400">ARIMA/GARCH</span>
+            <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-400">Box-Cox Transformation</span>
+            <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-400">Information Coefficient (IC)</span>
+        </div>
+    </div>
 
     <script>
-        // 1. 初始化 Three.js (3D 地球简易逻辑)
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        const globeGeo = new THREE.SphereGeometry(3, 32, 32);
-        const globeMat = new THREE.MeshPhongMaterial({ color: 0x1e293b, wireframe: true });
-        const globe = new THREE.Mesh(globeGeo, globeMat);
-        scene.add(globe);
-
-        const light = new THREE.PointLight(0x60a5fa, 1, 100);
-        light.position.set(5, 5, 5);
-        scene.add(light);
-        camera.position.z = 8;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            globe.rotation.y += 0.002;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // 交互：切换城市
-        function rotateToCity(city) {
-            if(city === 'Atlanta') {
-                gsap.to(globe.rotation, { y: 1.5, duration: 1.5 });
-                gsap.to(camera.position, { z: 6, duration: 1.5 });
-            } else {
-                gsap.to(globe.rotation, { y: -1.5, duration: 1.5 });
-                gsap.to(camera.position, { z: 6, duration: 1.5 });
-            }
+        // 1. 初始化热力图方块
+        const heatmap = document.getElementById('heatmap');
+        for (let i = 0; i < 25; i++) {
+            const div = document.createElement('div');
+            const opacity = Math.random() * 0.7 + 0.1;
+            div.className = 'h-10 w-full rounded-sm';
+            div.style.backgroundColor = `rgba(56, 189, 248, ${opacity})`;
+            heatmap.appendChild(div);
         }
 
-        // 交互：供应链动画
-        function triggerOptimization() {
-            gsap.to("#box-old", { x: -200, opacity: 0, rotate: 45, duration: 1 });
-            gsap.to("#box-new", { scale: 1, opacity: 1, duration: 1, delay: 0.5 });
+        // 2. 夏普比率数字跳动动画
+        function animateNumbers() {
+            const sharpeText = document.getElementById('sharpe-ratio');
+            let data = { val: 0 };
+            
+            gsap.to(data, {
+                val: 1.8, // 对应简历中的夏普比率 
+                duration: 2.5,
+                ease: "power3.out",
+                onUpdate: () => {
+                    sharpeText.innerText = data.val.toFixed(1);
+                }
+            });
         }
 
-        // 交互：气候滑块
-        const slider = document.getElementById('year-slider');
-        slider.oninput = function() {
-            const year = this.value;
-            document.getElementById('year-val').innerText = year;
-            const mapOverlay = document.getElementById('map-overlay');
-            if(year > 2080) {
-                mapOverlay.style.backgroundColor = 'rgba(239, 68, 68, 0.5)';
-                document.getElementById('risk-val').innerText = 'Extreme';
-            } else if(year > 2050) {
-                mapOverlay.style.backgroundColor = 'rgba(234, 179, 8, 0.4)';
-                document.getElementById('risk-val').innerText = 'Medium';
-            } else {
-                mapOverlay.style.backgroundColor = 'rgba(34, 197, 94, 0.2)';
-                document.getElementById('risk-val').innerText = 'Low';
-            }
+        // 3. 因子高亮交互
+        function highlightFactor(type) {
+            const blocks = document.querySelectorAll('#heatmap div');
+            const color = type === 'momentum' ? '#38bdf8' : '#a855f7';
+            
+            gsap.to(blocks, {
+                backgroundColor: (i) => Math.random() > 0.5 ? color : 'rgba(30, 41, 59, 0.5)',
+                scale: (i) => Math.random() > 0.5 ? 1.2 : 0.8,
+                duration: 0.6,
+                stagger: 0.02,
+                ease: "back.out"
+            });
         }
+
+        // 4. Alpha 曲线路径动画
+        gsap.from("#alpha-line", {
+            drawSVG: "0%", // 注意：这通常需要 GSAP DrawSVG 插件，此处用 stroke-dash 模拟
+            strokeDasharray: 1000,
+            strokeDashoffset: 1000,
+            duration: 3,
+            ease: "power2.inOut"
+        });
+        gsap.to("#alpha-line", { strokeDashoffset: 0, duration: 3 });
+
+        // 页面加载后启动
+        window.onload = animateNumbers;
     </script>
-</body>
-</html>
-
 </body>
 </html>
