@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刘亮程 | Data Science Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .gradient-text { background: linear-gradient(90deg, #60A5FA, #A78BFA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="bg-[#0f172a] text-slate-200">
+
+    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center glass">
+        <div class="font-bold text-xl tracking-tighter">LIANGCHENG <span class="text-blue-500">LIU</span></div>
+        <div class="space-x-8 text-sm font-medium hidden md:flex">
+            <a href="#about" class="hover:text-blue-400 transition">关于我</a>
+            <a href="#edu" class="hover:text-blue-400 transition">教育背景</a>
+            <a href="#projects" class="hover:text-blue-400 transition">核心项目</a>
+            <a href="https://github.com/jayliu1016" target="_blank" class="hover:text-blue-400"><i class="fab fa-github"></i></a>
+        </div>
+    </nav>
+
+    <section id="about" class="min-h-screen flex flex-col justify-center items-center px-6 pt-20">
+        <div class="text-center max-w-3xl">
+            <h2 class="text-blue-500 font-semibold tracking-widest mb-4 uppercase text-sm">Data Scientist | SCM Architect</h2>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">Hello, 我是 <span class="gradient-text">刘亮程</span></h1>
+            <p class="text-lg text-slate-400 leading-relaxed mb-8">
+                深耕于**数据驱动决策**与**全球供应链优化** [cite: 5, 6]。擅长利用 Python、机器学习及因果推断解决复杂商业难题 [cite: 6, 10]。
+                曾任埃默里大学中国学生会主席，并作为 NCAA 足球运动员活跃于赛场 [cite: 11, 20]。
+            </p>
+            <div class="flex gap-4 justify-center">
+                <a href="#projects" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-medium transition shadow-lg shadow-blue-500/20">查看项目案例</a>
+                <a href="mailto:Jay.liu011016@gmail.com" class="glass px-8 py-3 rounded-full font-medium hover:bg-white/5 transition">联系我</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="edu" class="py-24 px-6 bg-slate-900/50">
+        <div class="max-w-5xl mx-auto">
+            <h3 class="text-3xl font-bold mb-12 text-center">学术背景</h3>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass p-8 rounded-3xl hover:border-blue-500/50 transition">
+                    <div class="text-blue-500 mb-4 text-xs font-bold uppercase">2024 - 2026</div>
+                    <h4 class="text-2xl font-bold mb-2">杜克大学 Duke University</h4>
+                    <p class="text-slate-400 mb-4">跨学科数据科学硕士 (MSDS) [cite: 14]</p>
+                    <ul class="text-sm text-slate-500 space-y-2">
+                        <li>• 获 20% 优秀奖学金 [cite: 14]</li>
+                        <li>• GPA: 3.9 / 4.0 [cite: 14]</li>
+                        <li>• 核心: LLM, 深度学习, 数据工程 [cite: 16]</li>
+                    </ul>
+                </div>
+                <div class="glass p-8 rounded-3xl hover:border-blue-500/50 transition">
+                    <div class="text-blue-500 mb-4 text-xs font-bold uppercase">2020 - 2024</div>
+                    <h4 class="text-2xl font-bold mb-2">埃默里大学 Emory University</h4>
+                    <p class="text-slate-400 mb-4">量化科学学士 (经济学) [cite: 17]</p>
+                    <ul class="text-sm text-slate-500 space-y-2">
+                        <li>• 专业 GPA: 3.87 / 4.0 [cite: 18]</li>
+                        <li>• 辅修: 戏剧研究 [cite: 17]</li>
+                        <li>• 入选院长嘉奖名单 (Dean's List) [cite: 20]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h3 class="text-3xl font-bold mb-16 text-center">核心项目案例</h3>
+            
+            <div class="grid md:grid-cols-2 gap-16 items-center mb-32">
+                <div>
+                    <span class="text-blue-500 font-mono text-sm">[ GRADUATION PROJECT ]</span>
+                    <h4 class="text-3xl font-bold mt-2 mb-6 text-white">气候风险驱动房地产定价模型</h4>
+                    <p class="text-slate-400 mb-6 leading-relaxed">
+                        为 Citizens 银行开发，利用随机森林与 XGBoost 算法，在县级维度刻画野火、洪水等极端天气对美国房价及保险费率的影响 。
+                    </p>
+                    <div class="p-6 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                        <p class="text-sm text-blue-300 font-medium mb-3">交互模拟：气候冲击滑块 (2025-2100)</p>
+                        <input type="range" class="w-full accent-blue-500">
+                        <div class="flex justify-between text-[10px] mt-2 text-slate-500 uppercase">
+                            <span>低风险</span>
+                            <span>中度影响</span>
+                            <span>极端风险</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="rounded-3xl overflow-hidden border border-slate-700 shadow-2xl relative group">
+                    <img src="https://api.placeholder.com/600/400/0f172a/60A5FA?text=Interactive+Map+Placeholder" alt="Map View" class="w-full">
+                    <div class="absolute inset-0 bg-blue-600/20 group-hover:bg-transparent transition duration-500"></div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="order-2 md:order-1 flex flex-col gap-4">
+                    <div class="glass p-6 rounded-2xl border-l-4 border-red-500">
+                        <span class="text-xs text-slate-500 uppercase">Original Cost</span>
+                        <div class="text-3xl font-bold text-red-400">$208 - $806</div>
+                    </div>
+                    <div class="glass p-6 rounded-2xl border-l-4 border-green-500 scale-105 shadow-xl shadow-green-500/10">
+                        <span class="text-xs text-slate-500 uppercase">Optimized Cost</span>
+                        <div class="text-4xl font-bold text-green-400">$0.40 - $8.00</div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2">
+                    <span class="text-green-500 font-mono text-sm">[ SCM OPTIMIZATION @ CELLINK ]</span>
+                    <h4 class="text-3xl font-bold mt-2 mb-6 text-white">包装成本大幅削减项目</h4>
+                    <p class="text-slate-400 mb-6 leading-relaxed">
+                        通过重新设计模块化 EPE/ESD 包装，单件成本最高降幅达 **99.95%** 。
+                        不仅每年节省 100 万美元，更将跌落测试通过率提升至 98% 。
+                    </p>
+                    <div class="flex gap-4">
+                        <span class="px-3 py-1 bg-slate-800 rounded text-xs">Gurobi/PuLP</span>
+                        <span class="px-3 py-1 bg-slate-800 rounded text-xs">Python</span>
+                        <span class="px-3 py-1 bg-slate-800 rounded text-xs">SOP Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-slate-800 text-center text-slate-500 text-sm">
+        <p>© 2026 Liangcheng Liu. Built with Data & Passion.</p>
+        <p class="mt-2">LinkedIn: <a href="https://www.linkedin.com/in/liangcheng-liu" class="hover:text-blue-500">liangcheng-liu</a> | GitHub: <a href="https://github.com/jayliu1016" class="hover:text-blue-500">jayliu1016</a> [cite: 3]</p>
+    </footer>
+
+</body>
+</html>
